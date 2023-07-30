@@ -20,7 +20,7 @@ class FotoFactory extends Factory
     {
         return [
             'receta_id' => 1,
-            'ruta' => $this->faker->imageUrl,
+            'url' => $this->faker->imageUrl,
         ];
     }
 }

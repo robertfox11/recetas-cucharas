@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comentarios', function (Blueprint $table) {
+        Schema::create('ingrediente_receta', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('receta_id');
-            $table->string('nombre_autor');
-            $table->string('correo_autor');
-            $table->text('contenido');
-            $table->timestamps();
+            $table->unsignedBigInteger('ingrediente_id');
 
             $table->foreign('receta_id')->references('id')->on('recetas')->onDelete('cascade');
+            $table->foreign('ingrediente_id')->references('id')->on('ingredientes')->onDelete('cascade');
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comentarios');
+        Schema::dropIfExists('ingrediente_receta');
     }
 };

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\CategoriaReceta;
 use App\Models\Receta;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,14 +20,15 @@ class RecetaFactory extends Factory
     public function definition(): array
     {
         return [
-            'titulo' => $this->faker->sentence(3),
+            'titulo' => $this->faker->words(3, true),
             'descripcion' => $this->faker->paragraph(2),
             'instrucciones_preparacion' => $this->faker->paragraph(3),
-            'tiempo_preparacion' => $this->faker->numberBetween(10, 120),
-            'tiempo_coccion' => $this->faker->numberBetween(10, 120),
-            'porciones' => $this->faker->numberBetween(1, 10),
+            'tiempo_preparacion' => $this->faker->numberBetween(15, 120),
+            'tiempo_coccion' => $this->faker->numberBetween(10, 90),
+            'porciones' => $this->faker->numberBetween(1, 6),
             'dificultad' => $this->faker->randomElement(['Fácil', 'Moderada', 'Difícil']),
             'calificacion_promedio' => $this->faker->randomFloat(2, 0, 5),
+            'categoria_id' => CategoriaReceta::factory()->create()->id,
         ];
     }
 }

@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('ingredientes', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_ingrediente');
-            $table->text('descripcion')->nullable();
-            $table->string('categoria');
             $table->timestamps();
         });
     }

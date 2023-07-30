@@ -19,9 +19,7 @@ class IngredienteFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre_ingrediente' => $this->faker->word,
-            'descripcion' => $this->faker->sentence,
-            'categoria' => $this->faker->randomElement(['carnes', 'verduras', 'frutas', 'lácteos', 'otros']),
+            'nombre_ingrediente' => $this->faker->unique()->word,
         ];
     }
 }

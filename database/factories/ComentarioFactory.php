@@ -22,7 +22,7 @@ class ComentarioFactory extends Factory
             'receta_id' => 1, // ID de la receta relacionada (cambiar según tus datos)
             'nombre_autor' => $this->faker->name,
             'correo_autor' => $this->faker->email,
-            'comentario' => $this->faker->paragraph,
+            'contenido' => $this->faker->paragraph,
         ];
     }
 }

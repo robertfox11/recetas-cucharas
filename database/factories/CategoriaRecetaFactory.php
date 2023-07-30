@@ -19,7 +19,7 @@ class CategoriaRecetaFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre_categoria' => $this->faker->word,
+            'nombre_categoria' => $this->faker->words(3, true),
         ];
     }
 }

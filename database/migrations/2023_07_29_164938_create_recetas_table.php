@@ -21,7 +21,11 @@ return new class extends Migration
             $table->integer('porciones');
             $table->enum('dificultad', ['Fácil', 'Moderada', 'Difícil']);
             $table->decimal('calificacion_promedio', 4, 2)->default(0);
+            $table->unsignedBigInteger('categoria_id'); // Clave foránea de la tabla "categoria_recetas"
             $table->timestamps();
+
+            $table->foreign('categoria_id')->references('id')->on('categoria_recetas')->onDelete('cascade');
+
         });
     }
 

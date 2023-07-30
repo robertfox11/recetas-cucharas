@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('fotos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('receta_id');
-            $table->string('ruta');
+            $table->string('url');
             $table->timestamps();
 
             $table->foreign('receta_id')->references('id')->on('recetas')->onDelete('cascade');
-    
+
         });
     }
 
