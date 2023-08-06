@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class CategoriaReceta extends Model
 {
     use HasFactory;
+    protected $table = 'categoria_recetas';
+    public function recetas()
+    {
+        return $this->hasMany(Receta::class, 'categoria_id');
+    }
 }
