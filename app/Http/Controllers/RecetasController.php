@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategoriaReceta;
+use App\Models\Foto;
 use App\Models\Ingrediente;
+use App\Models\Ingrediente_Receta;
 use App\Models\Receta;
 use Illuminate\Http\Request;
 
@@ -15,6 +17,7 @@ class RecetasController extends Controller
     }
     public function createReceta(){
         $categorias = CategoriaReceta::all();
+        dd($categorias);
         return view('recetas.create', compact('categorias'));
     }
     public function storeReceta(Request $request){
@@ -65,6 +68,20 @@ class RecetasController extends Controller
         // Asignar los ingredientes a la receta
         $receta->ingredientes()->attach($ingredientesIDs);
         return redirect()->route('recetas')->with('success', 'Receta creada exitosamente.');
+    }
+
+    public function editReceta($id){
+        // Obtener la receta por su ID
+        $receta = Receta::findOrFail($id);
+        $categoria = CategoriaReceta::findOrFail($receta->categoria_id);
+        $ingredientesReceta = Ingrediente_Receta::where('receta_id', $id)->get();
+        // Obtener los IDs de ingredientes relacionados con la receta
+        $ingredientesIds = $ingredientesReceta->pluck('ingrediente_id')->toArray();
+        // Obtener los modelos completos de los ingredientes relacionados
+        $ingredientes = Ingrediente::whereIn('id', $ingredientesIds)->get();
+//        dd($categoria);
+        return view('recetas.edit', compact('categoria', 'receta', 'ingredientes'));
+
     }
 
 }

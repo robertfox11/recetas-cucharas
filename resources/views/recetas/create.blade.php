@@ -66,7 +66,54 @@
                                             <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
                                         </div>
                                     </div>
-
+                                    <div class="md:flex mb-6">
+                                        <div class="md:w-1/3">
+                                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="tiempo_preparacion">
+                                                Tiempo de preparación
+                                            </label>
+                                        </div>
+                                        <div class="md:w-2/3">
+                                            <input class="form-input block w-full focus:bg-white" id="tiempo_preparacion" type="number" value="0">
+                                            <p class="py-2 text-sm text-gray-600">Tiempo de Preparación (minutos)</p>
+                                        </div>
+                                    </div>
+                                    <div class="md:flex mb-6">
+                                        <div class="md:w-1/3">
+                                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="tiempo_coccion">
+                                                Tiempo de Cocción
+                                            </label>
+                                        </div>
+                                        <div class="md:w-2/3">
+                                            <input class="form-input block w-full focus:bg-white" id="tiempo_coccion" type="number" value="0">
+                                            <p class="py-2 text-sm text-gray-600">Tiempo de Cocción (minutos)</p>
+                                        </div>
+                                    </div>
+                                    <div class="md:flex mb-6">
+                                        <div class="md:w-1/3">
+                                            <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="porciones">
+                                                Porciones
+                                            </label>
+                                        </div>
+                                        <div class="md:w-2/3">
+                                            <input class="form-input block w-full focus:bg-white" id="porciones" type="number" value="0">
+                                            <p class="py-2 text-sm text-gray-600">Porciones</p>
+                                        </div>
+                                    </div>
+                                    <div class="md:flex mb-6">
+                                        <div class="md:w-1/3">
+                                            <label for="dificultad"  class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
+                                                Dificultad
+                                            </label>
+                                        </div>
+                                        <div class="md:w-2/3">
+                                            <select id="dificultad" name="categoria_id" class="form-select block w-full focus:bg-white" id="my-select">
+                                                <option value="Fácil">Fácil</option>
+                                                <option value="Moderada">Moderada</option>
+                                                <option value="Difícil">Difícil</option>
+                                            </select>
+                                            <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
+                                        </div>
+                                    </div>
                                     <div class="md:flex md:items-center">
                                         <div class="md:w-1/3"></div>
                                         <div class="md:w-2/3">
