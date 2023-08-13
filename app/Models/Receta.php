@@ -20,6 +20,20 @@ class Receta extends Model
         'categoria_id',
         // Agrega aquí más atributos que puedan ser asignados en masa
     ];
+    use HasFactory;
+    public static function getPossibleEnumValues($fieldName)
+    {
+        if (isset(static::$possibleEnums[$fieldName])) {
+            return static::$possibleEnums[$fieldName];
+        }
+
+        return [];
+    }
+
+    protected static $possibleEnums = [
+        'dificultad' => ['Difícil', 'Moderada', 'Fácil'],
+        // Agregar otros campos ENUM aquí si es necesario
+    ];
     public static function create(array $array)
     {
     }

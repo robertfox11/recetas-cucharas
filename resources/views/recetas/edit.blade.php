@@ -20,13 +20,18 @@
                             </ul>
                         </div>
                     @endif
-
+                    @if(session('success'))
+                        <div class="bg-blue-400">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="container w-full flex flex-wrap mx-auto px-2 pt-4 lg:pt-1 mt-2">
                         <!--Section container-->
                         <section class="w-full lg:w-full">
                             <div id='section2' class="p-2  lg:mt-0 rounded shadow bg-white">
-                                <form action="{{ route('recetas.store') }}" method="POST">
-                                   @csrf
+                                <form action="{{ route('recetas.update', $receta->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
                                     <div class="md:flex mb-6">
                                         <div class="md:w-1/3">
                                             <label class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="titulo">
@@ -34,21 +39,21 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <input class="form-input block w-full focus:bg-white" id="titulo" name="titulo" type="text" value="{{ old('titulo') }}">
+                                            <input class="form-input block w-full focus:bg-white" id="titulo" name="titulo" nametype="text" value="{{$receta->titulo}}">
                                             <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
                                         </div>
                                     </div>
 
                                     <div class="md:flex mb-6">
                                         <div class="md:w-1/3">
-                                            <label for="categoria_id"  class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" >
+                                            <label for="categoria_id"  class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-select">
                                                 Categoría
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
                                             <select id="categoria_id" name="categoria_id" class="form-select block w-full focus:bg-white">
                                                 @foreach($categorias as $categoria)
-                                                    <option value="{{ $categoria->id }}">{{ $categoria->nombre_categoria }}</option>
+                                                    <option value="{{ $categoria['id'] }}" {{$categoria->id === $cat->id ? 'selected' : ''}}>{{ $categoria->nombre_categoria }}</option>
                                                 @endforeach
                                             </select>
                                             <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
@@ -62,7 +67,7 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <textarea class="form-textarea block w-full focus:bg-white" name="descripcion" id="descripcion"  value="{{ old('descripcion') }}" rows="8"></textarea>
+                                            <textarea class="form-textarea block w-full focus:bg-white" name="descripcion" id="descripcion" rows="8">{{$receta->descripcion}}</textarea>
                                             <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
                                         </div>
                                     </div>
@@ -73,7 +78,7 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <textarea name="instrucciones_preparacion" class="form-textarea block w-full focus:bg-white" value="{{ old('instrucciones_preparacion') }}"  name="instrucciones_preparacion" id="instrucciones_preparacionrows="8"></textarea>
+                                            <textarea name="instrucciones_preparacion" class="form-textarea block w-full focus:bg-white" id="instrucciones_preparacion" rows="8">{{$receta->instrucciones_preparacion}}</textarea>
                                             <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
                                         </div>
                                     </div>
@@ -84,7 +89,7 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <input class="form-input block w-full focus:bg-white" name="tiempo_preparacion" id="tiempo_preparacion" type="number" value="{{ old('tiempo_preparacion') }}" >
+                                            <input class="form-input block w-full focus:bg-white" name="tiempo_preparacion" id="tiempo_preparacion" type="number" value="{{$receta->tiempo_preparacion}}">
                                             <p class="py-2 text-sm text-gray-600">Tiempo de Preparación (minutos)</p>
                                         </div>
                                     </div>
@@ -95,7 +100,7 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <input class="form-input block w-full focus:bg-white" name="tiempo_coccion" id="tiempo_coccion" type="number" value="{{ old('tiempo_coccion') }}">
+                                            <input class="form-input block w-full focus:bg-white" name="tiempo_coccion" id="tiempo_coccion" type="number" value="{{$receta->tiempo_coccion}}">
                                             <p class="py-2 text-sm text-gray-600">Tiempo de Cocción (minutos)</p>
                                         </div>
                                     </div>
@@ -106,7 +111,7 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <input class="form-input block w-full focus:bg-white" name="porciones" id="porciones" type="number" value="{{ old('porciones') }}">
+                                            <input class="form-input block w-full focus:bg-white" name="porciones" id="porciones" type="number" value="{{$receta->porciones}}">
                                             <p class="py-2 text-sm text-gray-600">Porciones</p>
                                         </div>
                                     </div>
@@ -117,10 +122,10 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <select id="dificultad" name="dificultad" class="form-select block w-full focus:bg-white" >
-                                                    @foreach($dificultadades as $df)
-                                                        <option value="{{$df}}">{{$df}}</option>
-                                                    @endforeach
+                                            <select id="dificultad" name="dificultad" class="form-select block w-full focus:bg-white">
+                                                @foreach($dificultadades as $df)
+                                                    <option value="{{$df}}"{{$df === $receta->dificultad ? 'selected' : ''}} >{{$df}}</option>
+                                                @endforeach
                                             </select>
                                             <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
                                         </div>
@@ -132,15 +137,18 @@
                                             </label>
                                         </div>
                                         <div class="md:w-2/3">
-                                            <textarea name="ingredientes" class="form-textarea block w-full focus:bg-white" id="ingredientes" value="{{ old('ingredientes') }}"    rows="8"></textarea>
+                                            <textarea name="ingredientes" class="form-textarea block w-full focus:bg-white" id="ingredientes" rows="8">{{$ingredientesNombres}}
+                                            </textarea>
                                             <small class="form-text text-muted">Ingrese los ingredientes separados por saltos de línea o comas.</small>
                                         </div>
                                     </div>
-                                    <div class="md:flex mb-6">
+                                    <div class="md:flex md:items-center">
                                         <div class="md:w-1/3"></div>
-                                        <button class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
-                                            Save
-                                        </button>
+                                        <div class="md:w-2/3">
+                                            <button class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
+                                                Save
+                                            </button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
