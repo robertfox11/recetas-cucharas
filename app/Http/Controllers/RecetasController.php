@@ -138,6 +138,5 @@ class RecetasController extends Controller
             // Si ocurre un error, redirige de vuelta al formulario con un mensaje de error
             return back()->with('error', 'Error al actualizar la receta. Por favor, inténtalo de nuevo.');
         }
-
     }
 }
