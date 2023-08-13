@@ -57,7 +57,7 @@
 
                                     <div class="md:flex mb-6">
                                         <div class="md:w-1/3">
-                                            <label for="descripcion" class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" for="my-textarea">
+                                            <label for="descripcion" class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4">
                                                 Descripción
                                             </label>
                                         </div>
