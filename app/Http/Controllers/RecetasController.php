@@ -9,6 +9,7 @@ use App\Models\Ingrediente_Receta;
 use App\Models\Receta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class RecetasController extends Controller
 {
@@ -16,10 +17,13 @@ class RecetasController extends Controller
         $recetas = Receta::with('categoria')->get();
         return view('recetas.index', compact('recetas'));
     }
-    public function createReceta(){
+    public function createReceta(Receta $receta){
+
         $categorias = CategoriaReceta::all();
+        $receta = new Receta();
+        $ingredientesNombres = "";
         $dificultadades = Receta::getPossibleEnumValues('dificultad');
-        return view('recetas.create', compact('categorias', 'dificultadades'));
+        return view('recetas.create', compact('categorias', 'dificultadades', 'receta', 'ingredientesNombres'));
     }
     public function storeReceta(Request $request){
 
@@ -50,7 +54,6 @@ class RecetasController extends Controller
         // Verificar si la receta se creó correctamente
         if (!$receta->save()) {
             // Si no se pudo guardar la receta, manejar el error adecuadamente
-            // Por ejemplo, puedes redirigir de nuevo al formulario con un mensaje de error
             return redirect()->back()->with('error', 'Error al crear la receta.');
         }
 

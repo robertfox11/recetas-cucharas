@@ -9,6 +9,7 @@ class CategoriaReceta extends Model
 {
     use HasFactory;
     protected $table = 'categoria_recetas';
+    protected $fillable = ['nombre_categoria'];
     public function recetas()
     {
         return $this->hasMany(Receta::class, 'categoria_id');
