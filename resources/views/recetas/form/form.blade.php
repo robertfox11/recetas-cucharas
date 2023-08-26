@@ -41,12 +41,11 @@
 <div class="md:flex mb-6">
     <div class="md:w-1/3">
         <label for="instrucciones_preparacion" class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" >
-            Instrucciónes de preparación
+            Instrucciones de preparación
         </label>
     </div>
     <div class="md:w-2/3">
-        <textarea name="instrucciones_preparacion" class="form-textarea block w-full focus:bg-white"  id="instrucciones_preparacionrows" rows="8">{{ old('instrucciones_preparacion', $receta->instrucciones_preparacion) }}
-        </textarea>
+        <textarea name="instrucciones_preparacion" class="form-textarea block w-full focus:bg-white"  id="instrucciones_preparacion" rows="8" >{{ old('instrucciones_preparacion', $receta->instrucciones_preparacion) }}</textarea>
         <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
     </div>
 </div>
@@ -109,9 +108,35 @@
         <small class="form-text text-muted">Ingrese los ingredientes separados por saltos de línea o comas.</small>
     </div>
 </div>
+<div id="divFicheros"
+     class="flex flex-col w-full mt-2 items-start justify-start bg-grey-lighter relative py-1.5 sm:p-0 lg:p-0 md:p-0">
+    @error('foto[]')
+    <p class="bg-red-100 rounded-lg mb-1 text-xs text-red-700 inline-flex items-center"
+       role="alert">{{ $message}}</p>
+    @enderror
+    {{--    <div class="md:w-1/3">--}}
+    {{--        <label for="uploadImage" class="block text-gray-600 font-bold md:text-left mb-3 md:mb-0 pr-4" >--}}
+    {{--            Imagenes--}}
+    {{--        </label>--}}
+    {{--    </div>--}}
+    <div class="md:w-2/3">
+        <input type="file" id="uploadImage" name="foto[]" multiple
+               class="campo block w-full text-sm text-gray-900  rounded-xlg cursor-pointer focus:outline-none form-control">
+    </div>
+    <div id="pic_box" class="flex justify-center rounded-lg ml-auto w-full mt-2">
+        <div class="container p-2 mx-auto lg:pt-5 lg:px-32 lg:p-2 md:px-0 ">
+            <div id="imagebox" class="flex flex-wrap -m-1 md:-m-2">
+                <!--images -->
+            </div>
+        </div>
+    </div>
+</div>
 <div class="md:flex mb-6">
     <div class="md:w-1/3"></div>
     <button class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
         Save
     </button>
 </div>
+<script>
+    var divFichero = document.getElementById('divFicheros');
+</script>

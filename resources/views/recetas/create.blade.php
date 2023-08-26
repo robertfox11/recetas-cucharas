@@ -25,7 +25,7 @@
                         <!--Section container-->
                         <section class="w-full lg:w-full">
                             <div id='section2' class="p-2  lg:mt-0 rounded shadow bg-white">
-                                <form action="{{ route('recetas.store') }}" method="POST">
+                                <form action="{{ route('recetas.store') }}" method="POST"  enctype="multipart/form-data">
                                     @include('recetas.form.form')
                                 </form>
                             </div>

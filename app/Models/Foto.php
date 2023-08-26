@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Foto extends Model
 {
     use HasFactory;
+    protected $fillable = ['receta_id','url'];
 }

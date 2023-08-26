@@ -7,6 +7,7 @@ use App\Models\Foto;
 use App\Models\Ingrediente;
 use App\Models\Ingrediente_Receta;
 use App\Models\Receta;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\Cast\Object_;
@@ -36,6 +37,7 @@ class RecetasController extends Controller
             'porciones' => 'required|integer',
             'dificultad' => 'required',
             'categoria_id' => 'required|exists:categoria_recetas,id',
+
             // Agrega aquí las validaciones para los ingredientes y fotos si lo deseas
         ]);
 
@@ -72,6 +74,21 @@ class RecetasController extends Controller
 
         // Asignar los ingredientes a la receta
         $receta->ingredientes()->attach($ingredientesIDs);
+
+        // Procesar y guardar las imágenes
+        $fotos = [];
+
+        if ($request->hasFile('foto')) {
+            foreach ($request->file('foto') as $image) {
+                $currentDate = Carbon::now()->toDateString(); // Obtiene la fecha actual
+                $fileName = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension(); // Nombre del archivo con fecha y un identificador único
+                $path = $image->storeAs('fotos', $fileName, 'public'); // Guardar imagen en el sistema de archivos
+                $fotos[] = ['url' => $path];
+            }
+        }
+        $receta->fotos()->createMany($fotos); // Asociar las imágenes a la receta
+
+
         return redirect()->route('recetas')->with('success', 'Receta creada exitosamente.');
     }
 

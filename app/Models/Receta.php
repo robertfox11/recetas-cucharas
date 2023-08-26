@@ -47,4 +47,9 @@ class Receta extends Model
     {
         return $this->belongsToMany(Ingrediente::class, 'ingrediente_receta', 'receta_id', 'ingrediente_id');
     }
+
+    public function fotos()
+    {
+        return $this->hasMany(Foto::class);
+    }
 }
