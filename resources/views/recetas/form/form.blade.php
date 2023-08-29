@@ -126,7 +126,16 @@
     <div id="pic_box" class="flex justify-center rounded-lg ml-auto w-full mt-2">
         <div class="container p-2 mx-auto lg:pt-5 lg:px-32 lg:p-2 md:px-0 ">
             <div id="imagebox" class="flex flex-wrap -m-1 md:-m-2">
-                <!--images -->
+{{--                <div id="" class="selImg flex  w-full lg:w-1/3 md:w-1/2 sm:w-1/2 p-0.5" >--}}
+{{--                    @foreach($fotos as $foto)--}}
+
+{{--                    <div class="w-full lg:p-1 p-1 md:p-2 border border-gray-200 rounded-lg">--}}
+{{--                        <button onclick="" type="button" class="btndelete lg:p-1 md:p-1 p-1 absolute bg-gray-200 opacity-80 m-1 rounded-xl text-xs text-red-500"><i class="fa-solid fa-trash-can"></i></button>--}}
+{{--                        <img class="block p-0 lg:px-0 object-fill object-center w-full h-full  rounded-lg "--}}
+{{--                             src="{{ Storage::url($foto->url) }}" alt="image">--}}
+{{--                    </div>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
@@ -137,6 +146,152 @@
         Save
     </button>
 </div>
-<script>
+<script type="module">
+    const recetaId = @json($receta->id);
     var divFichero = document.getElementById('divFicheros');
+    var fotos = @json($fotos);
+    var imagenesArr = [...fotos];
+    let imgArrleng = fotos.length;//capturamo el tamaño del array
+    console.log(imagenesArr)
+    $(document).ready(function () {
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                return false;
+            }
+        });
+        if (imgArrleng > 0) {
+            // vistaPrev.style.display = "block"
+            //mostramos imagenes y agregamos el text para mostrar
+            let textStorage = '/storage/';
+            for (let i in imagenesArr) {
+                imagenesArr[i]['text'] = textStorage
+            }
+            console.log(imagenesArr)
+            console.log('hola')
+            // carouselMini.addClass("hidden")
+            imagenesPrecargada(imagenesArr)
+        }
+        //detecta si hay cambios
+        $(".campo").change(function () {
+            $('[name="enviar"]').prop('disabled', false);
+        });
+        // valida el total de precio de puntos
+        // var input = document.getElementById('precio_puntos');
+        // input.addEventListener('input', function () {
+        //     if (this.value.length > 5) {
+        //         // alert("Solo puede tener de longitud 5")
+        //         this.value = this.value.slice(0, 5);
+        //     }
+        // })
+    })
+    $("#uploadImage").on("change", function () {
+        //Al cargar imagenes la guardamos en el array para enviar el array actualizado
+        let uploadImgLenght = this.files.length - 1;
+        for (var i = 0; i <= uploadImgLenght; i++) {
+            var objUrl = getObjectURL(this.files[i]);
+            console.log(objUrl)
+            imagenesArr.push({'url_image': objUrl, 'text': ''});
+        }
+        console.log(imagenesArr)
+        imagenesPrecargada(imagenesArr)
+    });
+
+    function imagenesPrecargada(imgArr) {
+        //imagenes precargardas en vista previa
+        let html = '';
+        for (var i = 0; i < imgArr.length; i++) {
+            console.log(imgArr[i]['url_image'])
+            var imgImagen = new String(imgArr[i]['url_image']);
+            html += `<div id="selImg${i}" class="selImg flex  w-full lg:w-1/3 md:w-1/2 sm:w-1/2 p-0.5" >
+                                        <div class="w-full lg:p-1 p-1 md:p-2 border border-gray-200 rounded-lg">
+                                            <button onclick="btnDelete(${imgArr[i]['id']},'${imgImagen}')" data-id="${imgImagen}" type="button" class="btndelete lg:p-1 md:p-1 p-1 absolute bg-gray-200 opacity-80 m-1 rounded-xl text-xs text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+                                            <img class="block p-0 lg:px-0 object-fill object-center w-full h-full  rounded-lg " src="${imgArr[i]['text']}${imgImagen}" alt="image">
+                                        </div>
+                                   </div>`;
+        }
+        // Obtener la ruta de la imagen, la ruta no es la ruta local de la imagen
+        if (typeof imgArr !== 'undefined') {
+            $('#imagebox').show()
+            $('#imagebox').html(html);
+        } else {
+            $('#imagebox').hide()
+            return
+        }
+    }
+
+    function getObjectURL(file) {// Obtener URL IMG
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) {
+            // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    /**Vista previa imagenes precargadas carousel*/
+    // vistaPrev.addEventListener("click", vistaPrevia);
+    function vistaPrevia() {
+        //Mostrar y ocultar el carousel mini
+        let existeHidden = carouselMini.is(':hidden');
+        if (existeHidden) {
+            cargarImagenesCarouselmini(null)
+            carouselMini.fadeIn("slow");
+        } else {
+            carouselMini.fadeOut("slow");
+        }
+    }
+
+    function cargarImagenesCarouselmini(htmlCarousel) {
+        /**Muestra imagenes en carousel*/
+        var slideCataRegaloWidth = $("#imgCatalogoRegalo" + recetaId + " img").width()
+        var slideWidth = $("#slider-carousel" + recetaId).width()
+        var sizeLeftorRigth = slideWidth < 5 ?slideWidth=0:((slideWidth - slideCataRegaloWidth) / 2)
+        sizeLeftorRigth = (sizeLeftorRigth > 10) ? sizeLeftorRigth - 15 : sizeLeftorRigth;
+        if (htmlCarousel != null){
+            imgCatalogoRegalo.html(htmlCarousel)
+        }
+        $("#imgCatalogoRegalo" + recetaId + " img:first-child").removeClass(['absolute', 'opacity-0']).addClass('static')
+        $("#imgCatalogoRegalo" + recetaId).css("left", "")
+        $("#slider-carousel" + recetaId + " button:nth-child(2)").css({"left": sizeLeftorRigth})
+        $("#slider-carousel" + recetaId + " button:nth-child(3)").css({"right": sizeLeftorRigth})
+    }
+
+    async function btnDelete(id, imagen = 'hola'){
+        document.querySelectorAll('.btndelete')//se actualiza los botones en js
+        let respuesta = confirm("Estas seguro de eliminar este elemento")
+        let data = {
+            id : id,
+            regalo_image : imagen
+        }
+        if (respuesta){
+            let existe = imagenesArr.some(imgRegalo =>imgRegalo.imagen === imagen )
+            if (id != undefined){
+                try{
+                    let res = await axios.post('/users/regalo/delete',data);
+
+                }catch (e) {
+                    console.log(e)
+                }
+            }
+            if (existe){
+                //actualizamos el array
+                imagenesArr = imagenesArr.filter((item) => item.imagen !== imagen);
+                imagenesPrecargada(imagenesArr)
+                if (imagenesArr.length == 0){
+                    //ocultamos el carousel si no tiene datos
+                    carouselMini.css({'display':'none'})
+                    // document.getElementById("carouselMini").style.display = "none";
+                    // vistaPrev.style.display = "none"
+                }
+
+            }
+            alert("se ha actualizado correctamente")
+            return
+        }
+
+    }
 </script>

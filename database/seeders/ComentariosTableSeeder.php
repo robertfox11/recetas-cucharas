@@ -6,7 +6,7 @@ use App\Models\Comentario;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ComentariosTableSeeder extends Seeder
+    class ComentariosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

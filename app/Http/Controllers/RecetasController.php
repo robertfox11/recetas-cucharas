@@ -24,10 +24,10 @@ class RecetasController extends Controller
         $receta = new Receta();
         $ingredientesNombres = "";
         $dificultadades = Receta::getPossibleEnumValues('dificultad');
-        return view('recetas.create', compact('categorias', 'dificultadades', 'receta', 'ingredientesNombres'));
+        $fotos = [];
+        return view('recetas.create', compact('categorias', 'dificultadades', 'receta', 'ingredientesNombres', 'fotos'));
     }
     public function storeReceta(Request $request){
-
         $request->validate([
             'titulo' => 'required',
             'descripcion' => 'required',
@@ -83,9 +83,10 @@ class RecetasController extends Controller
                 $currentDate = Carbon::now()->toDateString(); // Obtiene la fecha actual
                 $fileName = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension(); // Nombre del archivo con fecha y un identificador único
                 $path = $image->storeAs('fotos', $fileName, 'public'); // Guardar imagen en el sistema de archivos
-                $fotos[] = ['url' => $path];
+                $fotos[] = ['url_image' => $path];
             }
         }
+
         $receta->fotos()->createMany($fotos); // Asociar las imágenes a la receta
 
 
@@ -104,10 +105,13 @@ class RecetasController extends Controller
         // Obtener los modelos completos de los ingredientes relacionados
         $ingredientes = Ingrediente::whereIn('id', $ingredientesIds)->get();
         $ingredientesNombres = $ingredientes->pluck('nombre_ingrediente')->implode(", "); // Obtiene los nombres de los ingredientes y los une con saltos de línea
-        return view('recetas.edit', compact('cat', 'dificultadades','categorias','receta', 'ingredientesNombres'));
+        //obtener las imagenes
+        $fotos = Foto::where('receta_id', $id)->get();
+        return view('recetas.edit', compact('cat', 'dificultadades','categorias','receta', 'ingredientesNombres', 'fotos'));
 
     }
     public function update(Request $request, $id){
+
         $request->validate([
             'titulo' => 'required',
             'descripcion' => 'required',
@@ -119,12 +123,13 @@ class RecetasController extends Controller
             'categoria_id' => 'required|exists:categoria_recetas,id',
             // Agrega aquí las validaciones para los ingredientes y fotos si lo deseas
         ]);
-
         $receta = Receta::findOrFail($id);
         if (!$receta) {
             $this->error("Receta with ID {$id} not fou  nd.");
             return;
         }
+        $receta->load('fotos');
+        $fotos = $receta->fotos;
         try {
             $actualizado = $receta->update([
                 'titulo' => $request->titulo,
@@ -152,6 +157,18 @@ class RecetasController extends Controller
                 }
 //            // Asignar los ingredientes a la receta
                 $receta->ingredientes()->attach($ingredientesIDs);
+                // Procesar y guardar las imágenes
+
+
+                if ($request->hasFile('foto')) {
+                    foreach ($request->file('foto') as $image) {
+                        $currentDate = Carbon::now()->toDateString();
+                        $fileName = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+                        $path = $image->storeAs('fotos', $fileName, 'public');
+                        $fotos[] = ['url_image' => $path];
+                        $receta->fotos()->create(['url_image' => $path]);
+                    }
+                }
                 return redirect()->route('recetas.edit', ['id' => $id])->with('success', 'Receta actualizada correctamente');
             }
         } catch (\Exception $e) {

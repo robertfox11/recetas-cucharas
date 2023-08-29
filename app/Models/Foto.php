@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Foto extends Model
 {
+    protected $fillable = ['receta_id','url_image'];
     use HasFactory;
-    protected $fillable = ['receta_id','url'];
+    public function receta()
+    {
+        return $this->belongsTo(Receta::class);
+    }
 }
