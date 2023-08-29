@@ -28,6 +28,7 @@ class RecetaFactory extends Factory
             'porciones' => $this->faker->numberBetween(1, 6),
             'dificultad' => $this->faker->randomElement(['Fácil', 'Moderada', 'Difícil']),
             'calificacion_promedio' => $this->faker->randomFloat(2, 0, 5),
+            'activo' => true,
             'categoria_id' => CategoriaReceta::factory()->create()->id,
         ];
     }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('porciones');
             $table->enum('dificultad', ['Fácil', 'Moderada', 'Difícil']);
             $table->decimal('calificacion_promedio', 4, 2)->default(0);
+            $table->boolean('activo')->default(true);
             $table->unsignedBigInteger('categoria_id'); // Clave foránea de la tabla "categoria_recetas"
             $table->timestamps();
 

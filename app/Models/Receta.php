@@ -17,6 +17,7 @@ class Receta extends Model
         'porciones',
         'dificultad',
         'calificacion_promedio',
+        'activo',
         'categoria_id',
         // Agrega aquí más atributos que puedan ser asignados en masa
     ];
