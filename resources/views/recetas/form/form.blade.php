@@ -45,7 +45,7 @@
         </label>
     </div>
     <div class="md:w-2/3">
-        <textarea name="instrucciones_preparacion" class="form-textarea block w-full focus:bg-white"  id="instrucciones_preparacion" rows="8" >{{ old('instrucciones_preparacion', $receta->instrucciones_preparacion) }}</textarea>
+        <textarea name="instrucciones_preparacion" class="form-textarea block w-full focus:bg-white"  wrap="soft" id="instrucciones_preparacion" rows="8" >{{ old('instrucciones_preparacion', $receta->instrucciones_preparacion) }}</textarea>
         <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
     </div>
 </div>

@@ -3,7 +3,7 @@
         <div class="w-full px-4 md:w-1/2 xl:w-1/3">
             <div class="mb-10 overflow-hidden rounded-lg bg-white">
                 @if ($receta->fotos->count() > 0)
-                    <img class="rounded-lg mx-auto object-fill h-96 w-4/5 " src="{{ asset('storage/' . $receta->fotos->first()->url_image) }}" alt="{{ $receta->fotos->first()->id }}">
+                    <img class="rounded-lg mx-auto object-fill h-96 w-4/5 " src="{{ asset('storage/' . $receta->fotos->first()->url_image) }}" alt="{{ $receta->fotos->first()->titulo }}">
                 @endif
                 <div class="p-8 tsm:p-9 md:p-7 xl:p-9">
                     <h3 class="text-center ">
@@ -18,7 +18,7 @@
                         {{$receta->descripcion}}
                     </p>
                     <a
-                        href="javascript:void(0)"
+                        href="{{route('recetas.show',$receta->url)}}"
                         class="text-body-color hover:border-primary hover:bg-primary inline-block rounded-full border border-[#E5E7EB] py-2 px-7 text-base font-medium transition hover:text-white"
                     >
                         Ver receta

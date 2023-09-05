@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nombre_autor');
             $table->string('correo_autor');
             $table->text('contenido');
+            $table->boolean('activo_comentario')->default(false);
             $table->timestamps();
 
             $table->foreign('receta_id')->references('id')->on('recetas')->onDelete('cascade');

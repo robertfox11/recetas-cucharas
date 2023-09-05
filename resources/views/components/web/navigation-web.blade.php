@@ -1,6 +1,6 @@
 <header class="bg-white shadow">
-    <div class="w-full grid grid-cols-1 max-w-8xl mx-auto py-4 px-4 sm:px-6 lg:px-4 border border-indigo-400">
-        <div class="border border-gray-300 text-center">
+    <div class="w-full grid grid-cols-1 max-w-8xl mx-auto py-4 px-4 sm:px-6 lg:px-4">
+        <div class="text-center">
             <div class="flex justify-center h-80 ">
                 <img class="rounded-lg w-4/5" src="/img/imagen_cuchara.jpg" alt="Recetas Cucharas" width="500" >
             </div>
@@ -15,7 +15,7 @@
                                     {{ __('Home') }}
                                 </x-nav-link>
                                 @foreach($categorias as $categoria)
-                                    <x-nav-link :href="route('recetas-show-id', ['nombre_categoria' => $categoria->nombre_categoria])"
+                                    <x-nav-link :href="route('recetas-by-categoria.id', ['nombre_categoria' => $categoria->nombre_categoria])"
                                                 :active="request()->route('nombre_categoria') == $categoria->nombre_categoria ? 'active' : ''">
                                         {{ __($categoria->nombre_categoria) }}
                                     </x-nav-link>
