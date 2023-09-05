@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comentario extends Model
 {
+    protected $fillable = ['receta_id', 'nombre_autor', 'correo_autor', 'contenido','activo_comentario'];
     use HasFactory;
 }
