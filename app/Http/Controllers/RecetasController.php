@@ -9,6 +9,7 @@ use App\Models\Ingrediente_Receta;
 use App\Models\Receta;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Expr\Cast\Object_;
 
@@ -175,5 +176,25 @@ class RecetasController extends Controller
             // Si ocurre un error, redirige de vuelta al formulario con un mensaje de error
             return back()->with('error', 'Error al actualizar la receta. Por favor, inténtalo de nuevo.');
         }
+    }
+
+    public function delete(Request $r){
+        try {
+            $image = Foto::find($r->id);
+            $existeImg = Storage::disk('public')->exists($r->regalo_image);
+            if (!$existeImg) {
+                return response()->json(['message' => 'La imagen no se encontró .'], 404);
+            }
+
+            //eliminamos el archivo
+            if ($existeImg && $image){
+                Storage::delete("public/".$r->regalo_image);
+                $image->delete();
+                return response()->json(['message' => 'La imagen se eliminó correctamente.']);
+            }
+        }catch (\Exception $e) {
+            return response()->json(['message' => 'Se produjo un error al eliminar la imagen.'], 500);
+        }
+
     }
 }

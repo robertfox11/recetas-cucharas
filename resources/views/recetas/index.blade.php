@@ -10,6 +10,7 @@
     <div class="py-3">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="col col-2 my-3 py-2">
+                <a href="{{url('/')}}" class="font-bold focus:outline-none text-white bg-blue-700 hover:bg-green-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 py-2.5 mb-2 dark:bg-blue-300 dark:hover:bg-blue-300 dark:focus:ring-blue-300"> App Main</a>
                 <a href="{{route('recetas.create')}}" class="font-bold focus:outline-none text-white bg-purple-700 hover:bg-green-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 py-2.5 mb-2 dark:bg-blue-300 dark:hover:bg-blue-300 dark:focus:ring-blue-300"> <i class="fa-solid fa-plus"></i> Crear Receta</a>
                 <a href="{{ route('categoria.create') }}" class="font-bold focus:outline-none text-white bg-purple-700 hover:bg-blue-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-2 py-2.5 mb-2 dark:bg-blue-300 dark:hover:bg-blue-300 dark:focus:ring-blue-300"> <i class="fa-solid fa-plus"></i> Crear Categoria</a>
             </div>
