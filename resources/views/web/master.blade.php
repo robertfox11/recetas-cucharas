@@ -27,15 +27,32 @@
         }
     </style>
 </head>
-<body class="font-sans antialiased">
-<div class="min-h-screen bg-gray-100">
-    <x-web.navigation-web  :categorias="$categorias" />
+<body class="font-sans antialiased bg-white">
+    <div class="min-h-screen bg-gray-100">
+        <x-web.navigation-web  :categorias="$categorias" />
 
-    <!-- Page Content -->
-    <main id="app">
-        @yield('content')
-    </main>
-</div>
+        <!-- Page Content -->
+        <main id="app">
+            @yield('content')
+        </main>
+
+    </div>
+    <footer class="bg-gray-800 text-gray-300 py-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Sección de Enlaces -->
+            <div class="space-x-4">
+                <a href="#" class="hover:text-gray-500">Inicio</a>
+                <a href="{{url('/terminos-servicio')}}" class="hover:text-gray-500">Terminos del servicio</a>
+                <a href="#" class="hover:text-gray-500">Servicios</a>
+                <a href="#" class="hover:text-gray-500">Contacto</a>
+            </div>
+
+            <!-- Derechos de Autor -->
+            <div>
+                &copy; 2023 {{ config('app.name') }}. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
 @yield('script')
 </body>
 </html>

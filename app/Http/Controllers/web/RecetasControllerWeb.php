@@ -94,4 +94,9 @@ class RecetasControllerWeb extends Controller
         }
         return redirect()->back()->with('success', 'Comentario enviado con éxito, en espera ha ser validado.');
     }
+
+    public function terminoServicio(){
+        $categorias = CategoriaReceta::take(9)->get();
+        return view('web.terminos-servicio', compact('categorias'));
+    }
 }

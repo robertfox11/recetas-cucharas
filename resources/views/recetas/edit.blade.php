@@ -56,15 +56,14 @@
             id : id,
             regalo_image : imagen
         }
-        console.log(id);
-        console.log(imagen)
+
         if (respuesta){
             let existe = imagenesArr.some(imgRegalo =>imgRegalo.imagen === data.imagen )
             console.log(existe)
             if (id != undefined){
                 try{
                     let res = await axios.post('/delete-receta',data);
-                    console.log(res)
+                    location.reload();
                 }catch (e) {
                     console.log(e)
                 }
