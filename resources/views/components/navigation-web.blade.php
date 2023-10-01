@@ -5,9 +5,9 @@
                 <img class="rounded-lg w-4/5" src="/img/imagen_cuchara.jpg" alt="Recetas Cucharas" width="500" >
             </div>
             <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-                <!-- Primary Navigation Menu -->
+                <!-- Primary Navigation Menu a-->
                 <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
+                    <div class="flex justify-between h-24">
                         <div class="flex">
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex gap-4">
