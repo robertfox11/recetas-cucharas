@@ -186,10 +186,8 @@
         let uploadImgLenght = this.files.length - 1;
         for (var i = 0; i <= uploadImgLenght; i++) {
             var objUrl = getObjectURL(this.files[i]);
-            console.log(objUrl)
             imagenesArr.push({'url_image': objUrl, 'text': ''});
         }
-        console.log(imagenesArr)
         imagenesPrecargada(imagenesArr)
     });
 
@@ -197,7 +195,6 @@
         //imagenes precargardas en vista previa
         let html = '';
         for (var i = 0; i < imgArr.length; i++) {
-            console.log(imgArr[i]['url_image'])
             var imgImagen = new String(imgArr[i]['url_image']);
             html += `<div id="selImg${i}" class="selImg flex  w-full lg:w-1/3 md:w-1/2 sm:w-1/2 p-0.5" >
                                         <div class="w-full lg:p-1 p-1 md:p-2 border border-gray-200 rounded-lg">
@@ -230,7 +227,6 @@
         return url;
     }
     /**Vista previa imagenes precargadas carousel*/
-    // vistaPrev.addEventListener("click", vistaPrevia);
     function vistaPrevia() {
         //Mostrar y ocultar el carousel mini
         let existeHidden = carouselMini.is(':hidden');
@@ -242,20 +238,20 @@
         }
     }
 
-    function cargarImagenesCarouselmini(htmlCarousel) {
-        /**Muestra imagenes en carousel*/
-        var slideCataRegaloWidth = $("#imgCatalogoRegalo" + recetaId + " img").width()
-        var slideWidth = $("#slider-carousel" + recetaId).width()
-        var sizeLeftorRigth = slideWidth < 5 ?slideWidth=0:((slideWidth - slideCataRegaloWidth) / 2)
-        sizeLeftorRigth = (sizeLeftorRigth > 10) ? sizeLeftorRigth - 15 : sizeLeftorRigth;
-        if (htmlCarousel != null){
-            imgCatalogoRegalo.html(htmlCarousel)
-        }
-        $("#imgCatalogoRegalo" + recetaId + " img:first-child").removeClass(['absolute', 'opacity-0']).addClass('static')
-        $("#imgCatalogoRegalo" + recetaId).css("left", "")
-        $("#slider-carousel" + recetaId + " button:nth-child(2)").css({"left": sizeLeftorRigth})
-        $("#slider-carousel" + recetaId + " button:nth-child(3)").css({"right": sizeLeftorRigth})
-    }
+    // function cargarImagenesCarouselmini(htmlCarousel) {
+    //     /**Muestra imagenes en carousel*/
+    //     var slideCataRegaloWidth = $("#imgCatalogoRegalo" + recetaId + " img").width()
+    //     var slideWidth = $("#slider-carousel" + recetaId).width()
+    //     var sizeLeftorRigth = slideWidth < 5 ?slideWidth=0:((slideWidth - slideCataRegaloWidth) / 2)
+    //     sizeLeftorRigth = (sizeLeftorRigth > 10) ? sizeLeftorRigth - 15 : sizeLeftorRigth;
+    //     if (htmlCarousel != null){
+    //         imgCatalogoRegalo.html(htmlCarousel)
+    //     }
+    //     $("#imgCatalogoRegalo" + recetaId + " img:first-child").removeClass(['absolute', 'opacity-0']).addClass('static')
+    //     $("#imgCatalogoRegalo" + recetaId).css("left", "")
+    //     $("#slider-carousel" + recetaId + " button:nth-child(2)").css({"left": sizeLeftorRigth})
+    //     $("#slider-carousel" + recetaId + " button:nth-child(3)").css({"right": sizeLeftorRigth})
+    // }
 
     // async function btnDelete(id, imagen = 'hola'){
     //     console.log(id);

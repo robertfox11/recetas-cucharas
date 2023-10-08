@@ -15,7 +15,7 @@
                         </a>
                     </h3>
                     <p class="text-body-color mb-7 text-base leading-relaxed">
-                        {{$receta->descripcion}}
+                        {{ Str::limit($receta->descripcion, 160) }}{{ strlen($receta->descripcion) > 150 ? '...' : '' }}
                     </p>
                     <a
                         href="{{route('recetas.show',$receta->url)}}"

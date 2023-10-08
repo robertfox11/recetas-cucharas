@@ -4,16 +4,18 @@
         <div class="container mx-auto">
             <div id="destados_recetas" class="mx-4">
                 <div class="w-full p-8">
-                    <div class="container mx-auto p-4">
+                    <div class="container mx-auto p-4 border border-red-700">
                         <h1 class="text-3xl font-semibold mb-4 uppercase">{{$nombre_receta}}</h1>
                         @if ($receta->fotos->count() > 0)
                             <img class="rounded-lg mx-auto object-fill h-96 w-4/5 " src="{{ asset('storage/' . $receta->fotos->first()->url_image) }}" alt="{{ $receta->fotos->first()->id }}">
                         @endif
                         <!-- Descripción de la Receta -->
-                        <div class="py-4 text-2xl grid-cols-1 gap-4 mb-2">
+                        <div class="py-4 text-2xl grid-cols-1 gap-4 mb-2 text-justify border border-green-600">
                             <p><strong>Tiempo de preparación: {{$receta->tiempo_preparacion}} minutos</strong></p>
                             <h2 class="font-semibold mb-2 text-red-500">Descripción</h2>
-                            <p class="text-gray-700 mb-4 text-xl text-justifyz">{{$receta->descripcion}}</p>
+                            <p class="text-gray-500 mb-4 text-xl text-justify">{{$receta->descripcion}}</p>
+                        </div>
+                        <div class="p-4 text-2xl grid-cols-1 gap-4 mb-2 text-justify border border-blue-700">
                             <!-- Ingredientes -->
                             <h2 class="font-semibold mb-2 text-red-500">Ingredientes</h2>
                             <ul class="max-w-7xl space-y-1 text-gray-500 list-inside dark:text-gray-400 text-xl grid grid-cols-3  text-center">
@@ -76,7 +78,7 @@
                             @endforeach
                             </div>
                         </div>
-                        <div class="max-w-2xl p-4">
+                        <div class="max-w-2xl p-4 border border-blue-700">
                             @if ($errors->any())
                                 <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
                                     Danger
