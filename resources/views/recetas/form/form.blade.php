@@ -163,8 +163,6 @@
             for (let i in imagenesArr) {
                 imagenesArr[i]['text'] = textStorage
             }
-            console.log(imagenesArr)
-            console.log('hola')
             // carouselMini.addClass("hidden")
             imagenesPrecargada(imagenesArr)
         }

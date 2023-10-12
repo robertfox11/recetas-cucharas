@@ -45,7 +45,6 @@
     const recetaId = @json($receta->id);
     var divFichero = document.getElementById('divFicheros');
     var fotos = @json($fotos);
-    console.log(fotos)
     var imagenesArr = [...fotos];
 
     async function btnDelete(id, imagen = 'hola'){
@@ -59,7 +58,6 @@
 
         if (respuesta){
             let existe = imagenesArr.some(imgRegalo =>imgRegalo.imagen === data.imagen )
-            console.log(existe)
             if (id != undefined){
                 try{
                     let res = await axios.post('/delete-receta',data);
