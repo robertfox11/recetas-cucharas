@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
          // Crear usuario administrador
         User::create([
             'name' => 'Admin',
-            'email' => env('EMAIL_ADMIN'),
+            'email' => env('EMAIL_ADMIN', 'admin@example.com'), // Usamos 'admin@example.com' como valor predeterminado si la variable no está definida.
             'password' => Hash::make(env('PASS_ADMIN')),
         ]);
 

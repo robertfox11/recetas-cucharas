@@ -29,17 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('storage:link', function () {
-    if (!file_exists(storage_path('seeds_executed'))) {
-        // Ejecuta el comando solo si el archivo de marca no existe
-        Artisan::call('db:seed');
 
-        // Crea un archivo de marca para indicar que el comando se ha ejecutado
-        file_put_contents(storage_path('seeds_executed'), 'Executed');
-    }
-
-    return 'Storage link';
-});
 
 require __DIR__.'/Webrecetas.php';
 

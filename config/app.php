@@ -55,8 +55,7 @@ return [
     |
     */
 
-    //'url' => env('APP_URL', 'http://miapp.local'),
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://miapp.local'),
 
     'asset_url' => env('ASSET_URL'),
 
