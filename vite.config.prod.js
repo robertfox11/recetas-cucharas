@@ -2,18 +2,13 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
-    server: {
-        hmr: {
-            host: 'localhost',
-        },
-    },
     plugins: [
         laravel({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
             ],
-            refresh: true,
+            // Otras configuraciones para producción si es necesario
         }),
     ],
     build: {
@@ -23,9 +18,5 @@ export default defineConfig({
         minify: true, // Minificación de archivos en producción
         sourcemap: false, // Desactivar generación de sourcemaps en producción
     },
-    resolve: {
-        alias: {
-            '$': 'jQuery'
-        },
-    },
+    // Otras configuraciones específicas para producción si es necesario
 });
