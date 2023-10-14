@@ -45,15 +45,16 @@
                         </thead>
                         <tbody>
                         @foreach ($categorias as $cat)
-                            <tr class="bg-white border-b ">
-                                <th scope="row" class="px-6 py-4 border  font-medium whitespace-nowrap ">
-                                    {{$cat->nombre_categoria}}
+                            <tr class="bg-white border-b" >
+                                <th scope="row" class="px-6 py-4 border  font-medium whitespace-nowrap gap-4">
+                                    <input id="nombre_categoria{{$cat->id}}" value="{{$cat->nombre_categoria}}" readonly>
                                 </th>
                                 <td class="px-6 py-4 border">
                                     {{$cat->created_at}}
                                 </td>
-                                <td class="px-2 py-4 border gap-0.5 text-center">
-                                    <button type="button" id="{{$cat->id}}" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2  mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><i class="fa-solid fa-trash"></i></button>
+                                <td class="grid grid-cols-2 px-2 py-4 border gap-1 text-center gap-x-2">
+                                    <button  id="eliminarCategoria{{$cat->id}}" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2  mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><i class="fa-solid fa-trash"></i></button>
+                                    <button  onclick="editarCategoria({{$cat->id}})" type="button" id="editarCategoria{{$cat->id}}" class="focus:outline-none text-white bg-green-700 hover:bg-white focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm p-2  mb-2 dark:bg-green-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><i class="fa-regular fa-pen-to-square"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -64,3 +65,32 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    function editarCategoria(id) {
+        inputValue = $("#nombre_categoria"+id)
+        console.log('id')
+        inputValue.prop('readonly', false)
+        inputValue.keypress(function (e) {
+            if (e.which == 13) {
+                console.log(e.target.value);
+                let categoriaActualizada = e.target.value
+                updateCategoria(categoriaActualizada, id)
+            }
+        });
+    }
+
+    async  function updateCategoria(categoriaNew, id){
+        let data = {
+            id : id,
+            categoriaNew : categoriaNew
+        }
+        try {
+            let res = await axios.post('/update-categoria', data);
+            alert(res.data.message)
+            location.reload();
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+</script>

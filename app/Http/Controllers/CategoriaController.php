@@ -25,4 +25,20 @@ class CategoriaController extends Controller
         }
         return redirect()->back()->with('success', 'Categoría creada exitosamente.');
     }
+    public function update(Request $r){
+        // Validar los datos de la solicitud, por ejemplo, asegurarte de que el nombre de la categoría sea único
+        $r->validate([
+            'categoriaNew' => 'required'
+        ]);
+        $categoria = CategoriaReceta::findOrFail($r->id);
+        if (!$categoria) {
+            return response()->json(['message' => 'Categoría no encontrada'], 404);
+        }
+        // Actualizar los campos de la categoría con los datos de la solicitud
+        $categoria->nombre_categoria = $r->categoriaNew;
+        // Guardar los cambios en la base de datos
+        $categoria->save();
+        return response()->json(['message' => 'Categoría actualizada con éxito']);
+
+    }
 }
