@@ -45,7 +45,6 @@
     const recetaId = @json($receta->id);
     var divFichero = document.getElementById('divFicheros');
     var fotos = @json($fotos);
-
     var imagenesArr = [...fotos];
 
     async function btnDelete(id, imagen = 'hola'){

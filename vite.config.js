@@ -18,9 +18,12 @@ export default defineConfig({
     build: {
         // Configuraciones específicas para producción
         outDir: 'public/build', // Directorio de salida para los archivos de construcción
-        assetsDir: '', // Directorio de activos (assets) en la carpeta outDir
+        assetsDir: 'assetsDir', // Directorio de activos (assets) en la carpeta outDir
         minify: true, // Minificación de archivos en producción
         sourcemap: false, // Desactivar generación de sourcemaps en producción
+    },
+    define: {
+        'process.env.NODE_ENV': 'production',
     },
     resolve: {
         alias: {

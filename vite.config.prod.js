@@ -23,4 +23,7 @@ export default defineConfig({
         sourcemap: false, // Desactivar generación de sourcemaps en producción
     },
     // Otras configuraciones específicas para producción si es necesario
+    define: {
+        'process.env.NODE_ENV': 'production',
+    },
 });
