@@ -14,11 +14,13 @@ export default defineConfig({
             ],
             refresh: true,
         }),
+        require('tailwindcss'), // Carga Tailwind CSS
+        require('autoprefixer'), // Carga Autoprefixe
     ],
     build: {
         // Configuraciones específicas para producción
         outDir: 'public/build', // Directorio de salida para los archivos de construcción
-        assetsDir: 'assetsDir', // Directorio de activos (assets) en la carpeta outDir
+        assetsDir: 'assets', // Directorio de activos (assets) en la carpeta outDir
         minify: true, // Minificación de archivos en producción
         sourcemap: false, // Desactivar generación de sourcemaps en producción
     },

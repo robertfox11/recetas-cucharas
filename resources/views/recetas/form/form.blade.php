@@ -146,7 +146,9 @@
         Save
     </button>
 </div>
-<script >
+<script defer>
+    const recetaId = @json($receta->id);
+    // var divFichero = document.getElementById('divFicheros');
     const fotos =  @json($fotos);
     let imgArrleng = fotos.length;//capturamo el tamaño del array
     var imagenesArr = [...fotos];
@@ -189,6 +191,47 @@
         imagenesPrecargada(imagenesArr)
     });
 
+
+    function getObjectURL(file) {// Obtener URL IMG
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) {
+            // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    /**Vista previa imagenes precargadas carousel*/
+    // function vistaPrevia() {
+    //     //Mostrar y ocultar el carousel mini
+    //     let existeHidden = carouselMini.is(':hidden');
+    //     if (existeHidden) {
+    //         cargarImagenesCarouselmini(null)
+    //         carouselMini.fadeIn("slow");
+    //     } else {
+    //         carouselMini.fadeOut("slow");
+    //     }
+    // }
+
+    // function cargarImagenesCarouselmini(htmlCarousel) {
+    //     /**Muestra imagenes en carousel*/
+    //     var slideCataRegaloWidth = $("#imgCatalogoRegalo" + recetaId + " img").width()
+    //     var slideWidth = $("#slider-carousel" + recetaId).width()
+    //     var sizeLeftorRigth = slideWidth < 5 ?slideWidth=0:((slideWidth - slideCataRegaloWidth) / 2)
+    //     sizeLeftorRigth = (sizeLeftorRigth > 10) ? sizeLeftorRigth - 15 : sizeLeftorRigth;
+    //     if (htmlCarousel != null){
+    //         imgCatalogoRegalo.html(htmlCarousel)
+    //     }
+    //     $("#imgCatalogoRegalo" + recetaId + " img:first-child").removeClass(['absolute', 'opacity-0']).addClass('static')
+    //     $("#imgCatalogoRegalo" + recetaId).css("left", "")
+    //     $("#slider-carousel" + recetaId + " button:nth-child(2)").css({"left": sizeLeftorRigth})
+    //     $("#slider-carousel" + recetaId + " button:nth-child(3)").css({"right": sizeLeftorRigth})
+    // }
+
     function imagenesPrecargada(imgArr) {
         //imagenes precargardas en vista previa
         let html = '';
@@ -210,80 +253,37 @@
             return
         }
     }
-
-    function getObjectURL(file) {// Obtener URL IMG
-        var url = null;
-        if (window.createObjectURL != undefined) { // basic
-            url = window.createObjectURL(file);
-        } else if (window.URL != undefined) {
-            // mozilla(firefox)
-            url = window.URL.createObjectURL(file);
-        } else if (window.webkitURL != undefined) {
-            // webkit or chrome
-            url = window.webkitURL.createObjectURL(file);
+    async function btnDelete(id, imagen = 'hola'){
+        document.querySelectorAll('.btndelete')//se actualiza los botones en js
+        let respuesta = confirm("Estas seguro de eliminar este elemento")
+        let data = {
+            id : id,
+            regalo_image : imagen
         }
-        return url;
-    }
-    /**Vista previa imagenes precargadas carousel*/
-    function vistaPrevia() {
-        //Mostrar y ocultar el carousel mini
-        let existeHidden = carouselMini.is(':hidden');
-        if (existeHidden) {
-            cargarImagenesCarouselmini(null)
-            carouselMini.fadeIn("slow");
-        } else {
-            carouselMini.fadeOut("slow");
+        if (respuesta) {
+            let existe = imagenesArr.some(imgRegalo => imgRegalo.imagen === data.imagen)
+            if (id != undefined) {
+                try {
+                    let res = await axios.post('/delete-receta', data);
+                    location.reload();
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+            if (existe) {
+                // eliminarElementos (condicionEliminar(imagenesArr, imagen));
+                imagenesArr = imagenesArr.filter((item) => item.url_image !== imagen);
+                imagenesPrecargada(imagenesArr)
+                if (imagenesArr.length == 0) {
+                    //ocultamos el carousel si no tiene datos
+                    // carouselMini.css({'display': 'none'})
+                    // document.getElementById("carouselMini").style.display = "none";
+                    // vistaPrev.style.display = "none"
+                }
+            }
+            alert("se ha actualizado correctamente")
+            return
         }
+
     }
-
-    // function cargarImagenesCarouselmini(htmlCarousel) {
-    //     /**Muestra imagenes en carousel*/
-    //     var slideCataRegaloWidth = $("#imgCatalogoRegalo" + recetaId + " img").width()
-    //     var slideWidth = $("#slider-carousel" + recetaId).width()
-    //     var sizeLeftorRigth = slideWidth < 5 ?slideWidth=0:((slideWidth - slideCataRegaloWidth) / 2)
-    //     sizeLeftorRigth = (sizeLeftorRigth > 10) ? sizeLeftorRigth - 15 : sizeLeftorRigth;
-    //     if (htmlCarousel != null){
-    //         imgCatalogoRegalo.html(htmlCarousel)
-    //     }
-    //     $("#imgCatalogoRegalo" + recetaId + " img:first-child").removeClass(['absolute', 'opacity-0']).addClass('static')
-    //     $("#imgCatalogoRegalo" + recetaId).css("left", "")
-    //     $("#slider-carousel" + recetaId + " button:nth-child(2)").css({"left": sizeLeftorRigth})
-    //     $("#slider-carousel" + recetaId + " button:nth-child(3)").css({"right": sizeLeftorRigth})
-    // }
-
-    // async function btnDelete(id, imagen = 'hola'){
-    //     console.log(id);
-    //     document.querySelectorAll('.btndelete')//se actualiza los botones en js
-    //     let respuesta = confirm("Estas seguro de eliminar este elemento")
-    //     let data = {
-    //         id : id,
-    //         regalo_image : imagen
-    //     }
-    //     if (respuesta){
-    //         let existe = imagenesArr.some(imgRegalo =>imgRegalo.imagen === imagen )
-    //         if (id != undefined){
-    //             try{
-    //                 let res = await axios.post('/delete-receta',data);
-    //
-    //             }catch (e) {
-    //                 console.log(e)
-    //             }
-    //         }
-    //         if (existe){
-    //             //actualizamos el array
-    //             imagenesArr = imagenesArr.filter((item) => item.imagen !== imagen);
-    //             imagenesPrecargada(imagenesArr)
-    //             if (imagenesArr.length == 0){
-    //                 //ocultamos el carousel si no tiene datos
-    //                 carouselMini.css({'display':'none'})
-    //                 // document.getElementById("carouselMini").style.display = "none";
-    //                 // vistaPrev.style.display = "none"
-    //             }
-    //
-    //         }
-    //         alert("se ha actualizado correctamente")
-    //         return
-    //     }
-    //
-    // }
 </script>
