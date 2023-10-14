@@ -147,9 +147,8 @@
     </button>
 </div>
 <script type="module">
-
+    const fotos =  @json($fotos);
     let imgArrleng = fotos.length;//capturamo el tamaño del array
-    console.log(imagenesArr)
     $(document).ready(function () {
         $(window).keydown(function (event) {
             if (event.keyCode == 13) {
