@@ -2,6 +2,10 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+    base : '/recetas-cucharas',
+    server: {
+        hmr: true
+    },
     plugins: [
         laravel({
             input: [
