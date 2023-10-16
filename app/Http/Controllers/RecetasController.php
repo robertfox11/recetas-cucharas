@@ -107,15 +107,8 @@ class RecetasController extends Controller
         // Obtener los modelos completos de los ingredientes relacionados
         $ingredientes = Ingrediente::whereIn('id', $ingredientesIds)->get();
         $ingredientesNombres = $ingredientes->pluck('nombre_ingrediente')->implode(", "); // Obtiene los nombres de los ingredientes y los une con saltos de línea
-        $ingredientesArray = explode(', ', $ingredientesNombres); // Divide la cadena en un array
-        // Elimina el primer elemento del array
-        if (count($ingredientesArray) > 0) {
-            array_shift($ingredientesArray);
-        }
-        $ingredientesNombres = implode(', ', $ingredientesArray); // Vuelve a unir el array en una cadena
         //obtener las imagenes
         $fotos = Foto::where('receta_id', $id)->get();
-//        dd($receta);
         return view('recetas.edit', compact('cat', 'dificultadades','categorias','receta', 'ingredientesNombres', 'fotos'));
 
     }
@@ -155,22 +148,23 @@ class RecetasController extends Controller
             if ($actualizado){
                 // Obtener los ingredientes ingresados por el usuario
                 $ingredientes = $request->input('ingredientes');
-//                dd($ingredientes);
-                $ingredientes = preg_split("/[\n,]+/", $ingredientes); // Separar los ingredientes por saltos de línea o comas
-//                dd($ingredientes);
+                $ingredientesArray = explode(', ', $ingredientes); // Divide la cadena en un array¡
+                // Eliminar espacios en blanco al principio y al final de cada elemento del array
+                $ingredientesArray = array_map('trim', $ingredientesArray);
+                // Si deseas eliminar elementos vacíos, puedes usar array_filter
+                $ingredientesNombres = array_filter($ingredientesArray);
+//                dd($ingredientesNombres);
                 // Crear los ingredientes y obtener sus IDs
                 $ingredientesIDs = [];
 
-                foreach ($ingredientes as $nombre) {
+                foreach ($ingredientesNombres as $nombre) {
                     $nombre = trim($nombre); // Eliminar espacios en blanco al inicio y final del nombre
                     $ingrediente = Ingrediente::firstOrCreate(['nombre_ingrediente' => $nombre]);
                     $ingredientesIDs[] = $ingrediente->id;
                 }
-//            // Asignar los ingredientes a la receta
-                $receta->ingredientes()->attach($ingredientesIDs);
+                // Obtener los ingredientes actuales de la receta
+                $receta->ingredientes()->sync($ingredientesIDs);
                 // Procesar y guardar las imágenes
-
-
                 if ($request->hasFile('foto')) {
                     foreach ($request->file('foto') as $image) {
                         $currentDate = Carbon::now()->toDateString();
