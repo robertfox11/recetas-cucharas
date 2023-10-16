@@ -106,6 +106,12 @@ class RecetasController extends Controller
         // Obtener los modelos completos de los ingredientes relacionados
         $ingredientes = Ingrediente::whereIn('id', $ingredientesIds)->get();
         $ingredientesNombres = $ingredientes->pluck('nombre_ingrediente')->implode(", "); // Obtiene los nombres de los ingredientes y los une con saltos de línea
+        $ingredientesArray = explode(', ', $ingredientesNombres); // Divide la cadena en un array
+        // Elimina el primer elemento del array
+        if (count($ingredientesArray) > 0) {
+            array_shift($ingredientesArray);
+        }
+        $ingredientesNombres = implode(', ', $ingredientesArray); // Vuelve a unir el array en una cadena
         //obtener las imagenes
         $fotos = Foto::where('receta_id', $id)->get();
         return view('recetas.edit', compact('cat', 'dificultadades','categorias','receta', 'ingredientesNombres', 'fotos'));
@@ -146,8 +152,9 @@ class RecetasController extends Controller
             if ($actualizado){
                 // Obtener los ingredientes ingresados por el usuario
                 $ingredientes = $request->input('ingredientes');
+//                dd($ingredientes);
                 $ingredientes = preg_split("/[\n,]+/", $ingredientes); // Separar los ingredientes por saltos de línea o comas
-
+//                dd($ingredientes);
                 // Crear los ingredientes y obtener sus IDs
                 $ingredientesIDs = [];
 
