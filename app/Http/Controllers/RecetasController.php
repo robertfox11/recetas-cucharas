@@ -51,6 +51,7 @@ class RecetasController extends Controller
             'tiempo_coccion' => $request->tiempo_coccion,
             'porciones' => $request->porciones,
             'dificultad' => $request->dificultad,
+            'activo' => $request->activo,
             'categoria_id' => $request->categoria_id,
             'calificacion_promedio' => 0, // Valor predeterminado
         ]);
@@ -114,6 +115,7 @@ class RecetasController extends Controller
         $ingredientesNombres = implode(', ', $ingredientesArray); // Vuelve a unir el array en una cadena
         //obtener las imagenes
         $fotos = Foto::where('receta_id', $id)->get();
+//        dd($receta);
         return view('recetas.edit', compact('cat', 'dificultadades','categorias','receta', 'ingredientesNombres', 'fotos'));
 
     }
@@ -146,6 +148,7 @@ class RecetasController extends Controller
                 'tiempo_coccion' => $request->tiempo_coccion,
                 'porciones' => $request->porciones,
                 'dificultad' => $request->dificultad,
+                'activo' => $request->activo ? 1 : 0,
                 'categoria_id' => $request->categoria_id,
                 // Agregar más campos aquí
             ]);

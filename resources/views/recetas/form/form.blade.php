@@ -108,6 +108,17 @@
         <small class="form-text text-muted">Ingrese los ingredientes separados por saltos de línea o comas.</small>
     </div>
 </div>
+<div class="md:flex mb-6 grid grid-cols-2 gap-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2 mx-2" for="activo">
+        ¿Activo?
+    </label>
+    <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+        <input type="checkbox" id="activo" name="activo" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+               :checked="{{ $receta->activo == 1 ? 'true' : 'false' }}" value="{{$receta->activo}}"/>
+        <label for="activo" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+    </div>
+    <span class="text-gray-700">{{ $receta->activo == 1 ? 'Activo' : 'No Activo' }}</span>
+</div>
 <div id="divFicheros"
      class="flex flex-col w-full mt-2 items-start justify-start bg-grey-lighter relative py-1.5 sm:p-0 lg:p-0 md:p-0">
     @error('foto[]')
@@ -157,6 +168,13 @@
             if (event.keyCode == 13) {
                 return false;
             }
+        });
+        let activoCheckbox = $('#activo');
+
+        activoCheckbox.change(function(e) {
+            // Cambia el valor de activo a 1 si el checkbox está marcado, o a 0 si no lo está
+           valorCheck = this.checked ? 1 : 0;
+           activoCheckbox.val(valorCheck);
         });
         if (imgArrleng > 0) {
             // vistaPrev.style.display = "block"

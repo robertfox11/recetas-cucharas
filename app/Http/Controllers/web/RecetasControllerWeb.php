@@ -15,7 +15,7 @@ class RecetasControllerWeb extends Controller
 {
     public function index(){
         $categorias = CategoriaReceta::take(9)->get();
-        $recetas = Receta::with('categoria')->orderBy('id','desc')->get();
+        $recetas = Receta::with('categoria')->where('activo', 1)->orderBy('id','desc')->get();
         $recetas->load('fotos');
         foreach ($recetas as $r){
             $cat_url = str_replace(" ", "-", $r->titulo);
