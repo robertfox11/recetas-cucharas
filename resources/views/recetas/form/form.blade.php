@@ -90,9 +90,9 @@
     </div>
     <div class="md:w-2/3">
         <select id="dificultad" name="dificultad" class="form-select block w-full focus:bg-white" >
-            @foreach($dificultadades as $df)
-                <option {{ old("dificultad") == $df ? "selected": "" }}  value="{{$df}}">{{$df}}</option>
-            @endforeach
+                @foreach($dificultades as $df)
+                    <option {{ $receta->dificultad == $df || (is_null($receta->dificultad) && $loop->first) ? 'selected' : '' }} value="{{ $df }}">{{ $df }}</option>
+                @endforeach
         </select>
         <p class="py-2 text-sm text-gray-600">add notes about populating the field</p>
     </div>

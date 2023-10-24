@@ -3,7 +3,7 @@
         <div class="w-full px-4 md:w-1/2 xl:w-1/3">
             <div class="mb-10 overflow-hidden rounded-lg bg-white">
                 @if ($receta->fotos->count() > 0)
-                    <img class="rounded-lg mx-auto object-fill h-96 w-4/5 " src="{{ asset('storage/' . $receta->fotos->first()->url_image) }}" alt="{{ $receta->fotos->first()->titulo }}">
+                    <img class="rounded-lg mx-auto object-fill h-96 w-4/5 " src="{{ asset('storage/fotos' . $receta->fotos->first()->url_image) }}" alt="{{ $receta->fotos->first()->titulo }}">
                 @endif
                 <div class="p-8 tsm:p-9 md:p-7 xl:p-9">
                     <h3 class="text-center ">

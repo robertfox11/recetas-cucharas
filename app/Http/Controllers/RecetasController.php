@@ -24,9 +24,9 @@ class RecetasController extends Controller
         $categorias = CategoriaReceta::all();
         $receta = new Receta();
         $ingredientesNombres = "";
-        $dificultadades = Receta::getPossibleEnumValues('dificultad');
+        $dificultades = Receta::getPossibleEnumValues('dificultad');
         $fotos = [];
-        return view('recetas.create', compact('categorias', 'dificultadades', 'receta', 'ingredientesNombres', 'fotos'));
+        return view('recetas.create', compact('categorias', 'dificultades', 'receta', 'ingredientesNombres', 'fotos'));
     }
     public function storeReceta(Request $request){
         $request->validate([
@@ -51,7 +51,7 @@ class RecetasController extends Controller
             'tiempo_coccion' => $request->tiempo_coccion,
             'porciones' => $request->porciones,
             'dificultad' => $request->dificultad,
-            'activo' => $request->activo,
+            'activo' => $request->activo ? 1 : 0,
             'categoria_id' => $request->categoria_id,
             'calificacion_promedio' => 0, // Valor predeterminado
         ]);
@@ -98,7 +98,7 @@ class RecetasController extends Controller
     public function editReceta($id){
         // Obtener la receta por su ID
         $receta = Receta::findOrFail($id);
-        $dificultadades = Receta::getPossibleEnumValues('dificultad');
+        $dificultades = Receta::getPossibleEnumValues('dificultad');
         $cat = CategoriaReceta::findOrFail($receta->categoria_id);
         $categorias = CategoriaReceta::all();
         $ingredientesReceta = Ingrediente_Receta::where('receta_id', $id)->get();
@@ -109,7 +109,7 @@ class RecetasController extends Controller
         $ingredientesNombres = $ingredientes->pluck('nombre_ingrediente')->implode(", "); // Obtiene los nombres de los ingredientes y los une con saltos de línea
         //obtener las imagenes
         $fotos = Foto::where('receta_id', $id)->get();
-        return view('recetas.edit', compact('cat', 'dificultadades','categorias','receta', 'ingredientesNombres', 'fotos'));
+        return view('recetas.edit', compact('cat', 'dificultades','categorias','receta', 'ingredientesNombres', 'fotos'));
 
     }
     public function update(Request $request, $id){
@@ -132,6 +132,7 @@ class RecetasController extends Controller
         }
         $receta->load('fotos');
         $fotos = $receta->fotos;
+//        dd($request);
         try {
             $actualizado = $receta->update([
                 'titulo' => $request->titulo,
@@ -141,6 +142,7 @@ class RecetasController extends Controller
                 'tiempo_coccion' => $request->tiempo_coccion,
                 'porciones' => $request->porciones,
                 'dificultad' => $request->dificultad,
+                'calificacion_promedio' => 5,
                 'activo' => $request->activo ? 1 : 0,
                 'categoria_id' => $request->categoria_id,
                 // Agregar más campos aquí
